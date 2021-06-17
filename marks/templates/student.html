@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+{% block content %}
+<section class="student my-5">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-4">
+				<h5>List of Students</h5>
+				<ul class="student_list list-group" style="height: calc(100vh - 250px);overflow-y: scroll;">
+					{% for s in students %}
+					<li class="list-group-item p-0{% if s.complete %} disabled{% endif %}">
+						<a class="list-group-item list-group-item-action border-0{% if s == student %} active{% endif %}" href="{{ s.get_absolute_url }}">{{ s.rollno }}</a>
+					</li>
+					{% endfor %}
+				</ul>	
+			</div>
+			<div class="col-lg-8">
+				{{ form.non_field_errors }}
+				<div class="row text-left">
+				{% for f in form %}
+				{% if f.errors %}
+				<div class="col-6">
+				<p class="pl-4" style="color:red;">{{ f.label }}</p>
+				{{ f.errors }}
+				</div>
+				{% endif %}
+				{% endfor %}
+				</div>
+				<form method="POST" action=".">
+					{% csrf_token %}
+					<input type="hidden" name="school" value="{{ student.school.id }}" />
+					<input type="hidden" name="sub1" value="{{ student.sub1 }}" />
+					<input type="hidden" name="sub2" value="{{ student.sub2 }}" />
+					<input type="hidden" name="sub3" value="{{ student.sub3 }}" />
+					<input type="hidden" name="{{ stage_field }}" value="1" />
+					<div class="row">
+						{% for field in form %}
+						{% if field.name != 'school' and field.name != 'sub1' and field.name != 'sub2' and field.name != 'sub3' %}
+						<div class="{% if forloop.counter0 > 6 %}col-md-2{% else %}col-md-6{% endif %}">
+							<label for="{{ field.auto_id }}">{{ field.label }}</label>
+							{{ field }}
+						</div>
+						{% endif %}
+						{% endfor %}
+						<button class="btn btn-primary mt-3 mx-2{% if student.complete %} disabled{% endif %}" type="submit">{% trans "Preview" %}</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</section>
+{% endblock %}
+{% block script %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+	$('form').submit(function(e){
+		$(':disabled').each(function(e){
+			$(this).removeAttr('disabled');
+		});
+	});
+</script>
+{% endblock %}

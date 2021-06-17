@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+    <!-- banner -->
+    <section>
+      <div class=" container-fluid " style="margin-top: -500px; margin-bottom: -18px;">
+        <div class=" row bg-info justify-content-center align-items-center" style="height: 100vh;">
+          <div class=" col-md-12 text-center">
+            <h2 class=" display-4 text-capitalize">
+              <span class=" text-warning">West Bengal Board Of Secondary Education </span><br>
+              <span class=" text-white font-weight-bold">Marks Collection Website</span>
+            </h2>
+            <br><br><br><br>
+            <h2 class=" font-weight-light text-light font-italic"> </h2>
+            <a href="{% url 'marks:login' %}" class=" btn btn-warning">Login Page</a>
+            <a href="{% url 'marks:students' %}" class=" btn btn-success">Student List</a>
+          </div>
+        </div>
+      </div>
+    </section>
+{% endblock %}

@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<section class="student my-5">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-4">
+			<br><br><br>
+				<h5>List of Students</h5>
+				<ul class="student_list list-group">
+					{% for s in students %}
+					<li class="list-group-item p-0{% if s.complete %} disabled{% endif %}">
+						<a class="list-group-item list-group-item-action border-0{% if s == student %} active{% endif %}" href="{{ s.get_absolute_url }}">{{ s.rollno }}</a>
+					</li>
+					{% endfor %}
+				</ul>	
+			</div>
+			<div class="col-lg-8">
+			<br><br>
+				<form id="student-form" method="POST" action=".">
+					{% csrf_token %}
+					<input type="hidden" name="school" value="{{ student.school.id }}" />
+					<div class="row">
+						{% for field in form %}
+						{% if field.name != 'school' %}
+						<div class="col-md-6">
+							<label for="{{ field.auto_id }}">{{ field.label }}</label>
+							{{ field }}
+							<span style="color: red">{{ field.errors }}</span>
+						</div>
+						{% endif %}
+						{% endfor %}
+						<button class="btn btn-primary mt-3 mx-2{% if student.complete %} disabled{% endif %}" type="submit">Save</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</section>
+{% endblock %}
+{% block script %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+	$('#student-form').on("submit", function(e){
+		$(':disabled').each(function(e){
+			$(this).removeAttr('disabled');
+		});
+	});
+</script>
+{% endblock %}
