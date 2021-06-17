@@ -52,6 +52,12 @@ SUBJECT_CODE_DICT = {
 	'23':'NEPALI'
 }
 
+# ROLL-NUMBER
+# Registration Number
+# Father's Name
+# Date of Birth
+# Subject Combination
+
 class StudentForm(forms.ModelForm):
 	class Meta:
 		model = Student

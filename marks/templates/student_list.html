@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-<section class="mt-5 pt-5 bg-info" style="min-height: calc(100vh - 48px);">
+<section class="bg-info" style="min-height: calc(100vh - 111px);">
     <div class="container-fluid">
         <div class="row justify-content-center pt-5">
             <div class=" col-sm-10 text-center">
@@ -53,8 +53,8 @@
                                 <td>{{s.name}}</td>
                                 <td>{{s.fname}}</td>
                                 <td>{{s.regno}}</td>
-                                <td>{{s.sub1}}</td>
-                                <td>{{s.sub2}}</td>
+                                <td>{{s.get_fl_name}}</td>
+                                <td>{{s.get_sl_name}}</td>
                                 <td>{% if s.fl|length < 1 %}No{% else %}Yes{% endif %}</td>
                             </tr>
                             {% endfor %}

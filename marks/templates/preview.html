@@ -2,10 +2,10 @@
 {% load static %}
 {% load i18n %}
 {% block content %}
-<section class="student mt-5 pt-5 bg-info" style="min-height: calc(100vh - 48px);">
-	<div class="container-fluid py-4">
+<section class="student bg-info" style="min-height: calc(100vh - 111px);">
+	<div class="container-fluid pt-4">
 		<div class="row">
-			<div class="col-lg-5">
+			<div class="col-lg-4">
 				<h3 class="mb-4">Preview your Submission</h3>
 				<ul class="student_list list-group">
 					{% for field in form %}
@@ -22,7 +22,7 @@
 				<h3 class="mt-4">Or Edit it again.</h3>
 				<a href="{% url 'marks:student' rollno=student.rollno %}" class="d-block btn btn-success">Edit</a>
 			</div>
-			<div class="col-lg-7">
+			<div class="col-lg-8">
 				<form method="POST" action="">
 					{% csrf_token %}
 					<input type="hidden" name="school" value="{{ student.school.id }}" />
