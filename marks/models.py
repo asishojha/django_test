@@ -29,7 +29,7 @@ class Student(models.Model):
     regno = models.CharField(max_length=11, verbose_name='Registration Number')
     name = models.CharField(max_length=40)
     fname = models.CharField(max_length=40, verbose_name='First Name')
-    dob = models.CharField(max_length=8, verbose_name='Date of Birth')
+    dob = models.CharField(max_length=30, verbose_name='Date of Birth')
     subj = models.CharField(max_length=40, verbose_name='Subject Combination')
     sub1 = models.CharField(max_length=2)
     sub2 = models.CharField(max_length=2)
