@@ -19,7 +19,7 @@ SECRET_KEY = 'django-insecure-%e1a(p-i^pp^w1mxo0x4ty9xsx8svb!3s6gbi9@035juex+2ob
 
 DEBUG = True
 
-ALLOWED_HOSTS = ['192.163.10.1','192.163.10.2','127.0.0.1']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -71,23 +71,23 @@ WSGI_APPLICATION = 'wbdata.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': 'mydb',
-#         'USER': 'idms',
-#         'PASSWORD': 'idms1994',
-#         'HOST': 'localhost',
-#         'PORT': '5432',
-#     }
-# }
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'mydb',
+        'USER': 'idms',
+        'PASSWORD': 'Idms1994',
+        'HOST': '20.204.49.50',
+        'PORT': '5432',
     }
 }
+
+#DATABASES = {
+#    'default': {
+#        'ENGINE': 'django.db.backends.sqlite3',
+#        'NAME': BASE_DIR / 'db.sqlite3',
+#    }
+#}
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
