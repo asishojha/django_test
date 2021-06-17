@@ -190,6 +190,5 @@ def student(request, rollno):
 	}
 	return render(request, 'student.html', context)
 
-@login_required
 def instructions(request):
 	return render(request, 'instructions.html')
