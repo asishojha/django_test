@@ -1,0 +1,54 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous" />
+    <script src="https://kit.fontawesome.com/ede3a76dbd.js" crossorigin="anonymous"></script>
+    <title>W.B.B.S.E.</title>
+    <style>
+    .errorlist {
+        padding-left: 15px;
+        color: red;
+        text-shadow: 0 0 black;
+    }
+    </style>
+    {% block style %}{% endblock %}
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-md navbar-light bg-dark fixed-top">
+        <a href="{% url 'marks:home' %}" class="navbar-brand">
+            <img src="{% static 'logo.png' %}" height="85" alt="CoolBrand">
+            <span class="d-inline ml-2 my-auto" style="font-size:36px;color:#fff;letter-spacing: 1.2px;vertical-align:middle;">W.B.B.S.E.</span>
+        </a>
+        <button class=" navbar-toggler bg-light" data-toggle="collapse" data-target="#nav"><span class="navbar-toggler-icon"></span></button>
+        <div class=" collapse navbar-collapse justify-content-between" id="nav">
+            <ul class="navbar-nav ml-auto">
+                <li class='nav-item'><a class='nav-link text-light text-uppercase font-weight-bold px-3' href="{% url 'marks:home' %}">Home</a></li>
+                <li class='nav-item'><a class='nav-link text-light text-uppercase font-weight-bold px-3' href="{% url 'marks:students' %}">Students List</a></li>
+                <li class='nav-item'><a class='nav-link text-light text-uppercase font-weight-bold px-3' href="#">Instructions</a></li>
+                {% if request.user.is_authenticated %}
+                <li class='nav-item'><a class='nav-link text-light text-uppercase font-weight-bold px-3' href="{% url 'marks:logout' %}">Logout</a></li>
+                {% else %}
+                <li class='nav-item'><a class='nav-link text-light text-uppercase font-weight-bold px-3' href="{% url 'marks:login' %}">Login</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+    {% if messages %}
+    <div>
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+            {{ message }}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+    {% block content %}{% endblock %}
+    {% block script %}{% endblock %}
+</body>
+
+</html>

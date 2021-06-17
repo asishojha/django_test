@@ -2,24 +2,24 @@
 {% load static %}
 {% load i18n %}
 {% block content %}
-<section class="student my-5">
-	<div class="container">
+<section class="student mt-5 pt-5 bg-info" style="min-height: calc(100vh - 48px);">
+	<div class="container-fluid py-4">
 		<div class="row">
 			<div class="col-lg-5">
 				<h3 class="mb-4">Preview your Submission</h3>
 				<ul class="student_list list-group">
 					{% for field in form %}
-					{% if field.name != 'school' and field.name != 'sub1' and field.name != 'sub2' and field.name != 'sub3' %}
-					<li class="list-group-item p-0">
+					{% if field.name != 'school' and field.name != 'sub1' and field.name != 'sub2' %}
+					<li class="list-group-item py-0">
 						<b>{{ field.label }}</b>: {{ field.data }}
 					</li>
 					{% endif %}
 					{% endfor %}
-					<li class="list-group-item p-0">
+					<li class="list-group-item py-0">
 						{% blocktrans %}<b>Security hash</b>: {{ hash_value }}{% endblocktrans %}
 					</li>
 				</ul>
-				<h3 class="my-4">Or Edit it again.</h3>
+				<h3 class="mt-4">Or Edit it again.</h3>
 				<a href="{% url 'marks:student' rollno=student.rollno %}" class="d-block btn btn-success">Edit</a>
 			</div>
 			<div class="col-lg-7">
@@ -28,21 +28,22 @@
 					<input type="hidden" name="school" value="{{ student.school.id }}" />
 					<input type="hidden" name="sub1" value="{{ student.sub1 }}" />
 					<input type="hidden" name="sub2" value="{{ student.sub2 }}" />
-					<input type="hidden" name="sub3" value="{{ student.sub3 }}" />
 					<input type="hidden" name="{{ hash_field }}" value="{{ hash_value }}" />
 					<input type="hidden" name="{{ stage_field }}" value="2" />
 					<div class="row">
 						{% for field in form %}
 						{{ field.as_hidden }}
-						{% if field.name != 'school' and field.name != 'sub1' and field.name != 'sub2' and field.name != 'sub3'%}
+						{% if field.name != 'school' and field.name != 'sub1' and field.name != 'sub2' %}
 						<div class="{% if forloop.counter0 > 7 %}col-md-2{% else %}col-md-6{% endif %}">
-							<p>{{ field.errors }}</p>
+							{{ field.errors }}
 							<label for="{{ field.auto_id }}">{{ field.label }}</label>
 							{{ field }}
 						</div>
 						{% endif %}
 						{% endfor %}
-						<button class="btn btn-primary mt-3 mx-2{% if student.complete %} disabled{% endif %}" type="submit">{% trans "Submit" %}</button>
+						<div class="col-12">
+							<button class="btn btn-primary btn-block{% if student.complete %} disabled{% endif %}" type="submit">{% trans "Submit" %}</button>
+						</div>
 					</div>
 				</form>
 			</div>

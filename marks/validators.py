@@ -4,7 +4,7 @@ from django.utils.translation import gettext_lazy as _
 def validate_marks(value):
 	try:
 		value = int(value)
-		if not 0 <= value <= 90:
+		if not 0 <= value <= 100:
 			raise ValidationError(
 				_('%(value)s is not a valid option'),
 				params={'value': value},

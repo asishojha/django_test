@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block style %}{% endblock %}
+{% block content %}
+<section class="mt-5 pt-5">
+	<div class="container pt-5">
+		<h2 class="mb-4">Marks Entry Website Instructions</h2>
+		<div class="row my-3">
+			<div class="col-md-6">
+				<h5>Step 1</h5>
+				<p>Go to the URL: <a target="_blank" href="https://www.wbbsedata.com">https://www.wbbsedata.com</a></p>
+				<h5>Step 2</h5>
+				<p>Once you get the Home page, click on the Login Page</p>
+			</div>
+			<div class="col-md-6">
+				<img src="{% static 'instructions/1.png' %}" class="img-fluid" alt="" />
+			</div>
+		</div>
+		<hr>
+		<div class="row my-3">
+			<div class="col-md-6">
+				<img src="{% static 'instructions/2.png' %}" class="img-fluid" alt="" />
+			</div>
+			<div class="col-md-6">
+				<h5>Step 3</h5>
+				<p>Now click on login and then you get the following page:</p>
+			</div>
+		</div>
+		<hr>
+		<div class="row my-3">
+			<div class="col-md-6">
+				<h5>Step 4</h5>
+				<p>For the 1st time enter your school index as your username and ‘password’ all in small letters as your password. After this you get a profile form only for the first time where in you fill your name , email and phone number. Then only for the 1st time a activation link is sent in to your entered email id. After clicking on the activation link sent in your email id, you are sent to a page to change your password given below and this is only for the 1st time login. After this process when ever you login, just enter the school index as username and the changed password or the new password as your password. </p>
+				<p><strong>User profile page : (only for the 1st time login )</strong></p>
+			</div>
+			<div class="col-md-6">
+				<img src="{% static 'instructions/3.png' %}" class="img-fluid" alt="" />
+			</div>
+		</div>
+		<hr>
+		<div class="row my-3">
+			<div class="col-md-6">
+				<img src="{% static 'instructions/4.png' %}" class="img-fluid" alt="" />
+			</div>
+			<div class="col-md-6">
+				<p><strong>Change password : (only for the 1st time login )</strong></p>
+			</div>
+		</div>
+		<hr>
+		<div class="row my-3">
+			<div class="col-md-6">
+				<h5>Step 5</h5>
+				<p>Once the password is changed then you are sent in to your school dashboard where in you get your school index and name. below that is a table which tells the figure of Regular Male , Regular Female , Total Candidates, Total students whose  marks Entry are left and total students whose marks entry are done. Now on top of the students table you see a button saying “Start Entering your marks”. Whenever you click this button it takes you to the first unentered marks candidate in your candidate list. The screen is given below for the students list: </p>
+			</div>
+			<div class="col-md-6">
+				<img src="{% static 'instructions/5.png' %}" class="img-fluid" alt="" />
+			</div>
+		</div>
+		<hr>
+		<div class="row my-3">
+			<div class="col-md-6">
+				<img src="{% static 'instructions/6.png' %}" class="img-fluid" alt="" />
+			</div>
+			<div class="col-md-6">
+				<h5>Step 6</h5>
+				<p>Now after clicking on “Start Entering marks” Button you get the following screen: <strong>check sbj combination</strong></p>
+			</div>
+		</div>
+		<hr>
+		<div class="row my-3">
+			<div class="col-md-6">
+				<h5>Step 7</h5>
+				<p>Enter Your marks for the subjects and click on preview  and you get the following preview screen:</p>
+			</div>
+			<div class="col-md-6">
+				<img src="{% static 'instructions/7.png' %}" class="img-fluid" alt="" />
+			</div>
+		</div>
+		<hr>
+		<div class="row my-3">
+			<div class="col-md-6">
+				<img src="{% static 'instructions/8.png' %}" class="img-fluid" alt="" />
+			</div>
+			<div class="col-md-6">
+				<h5>Step 8</h5>
+				<p>Here you  get an Edit and submit button. If all marks are ok press submit or else press edit again to go back to previous screen. After successfully submitting the form your automatically go to the form of the next candidate and fill its marks. When you have completed filling all the marks you get a message that “All your marks submission has been done successfully. Thanks for your co-operation.”. </p>
+			</div>
+		</div>
+		<hr>
+		<h2 class="mb-4">Special Instructions</h2>
+		<div class="row">
+			<div class="col-md-6">
+				<p>All the marks to be submitted are to be out of 100. Or else if a student is absent in any subject ‘AB’ is to be entered . any marks entered above 100 and other than ab will show error as below : </p>
+			</div>
+			<div class="col-md-6">
+				<img src="{% static 'instructions/errors.png' %}" class="img-fluid" alt="" />
+			</div>
+		</div>
+		<hr>
+	</div>
+</section>
+{% endblock %}

@@ -1,11 +1,17 @@
 from django import forms
-from .models import Student , SchoolProfile
 from django.contrib.auth import authenticate
+from .models import Student , SchoolProfile
+from django.contrib.auth.forms import PasswordChangeForm
 
+class PasswordResetForm(PasswordChangeForm):
+	def __init__(self, *args, **kwargs):
+		super(PasswordChangeForm, self).__init__(*args, **kwargs)
+		for field in self.fields:
+			self.fields[field].widget.attrs.update({'class': 'form-control'})
 
 class UsersLoginForm(forms.Form):
 	username = forms.CharField()
-	password = forms.CharField(widget = forms.PasswordInput,)
+	password = forms.CharField(widget = forms.PasswordInput)
 	
 	def __init__(self, *args, **kwargs):
 		super(UsersLoginForm, self).__init__(*args, **kwargs)
@@ -15,6 +21,7 @@ class UsersLoginForm(forms.Form):
 		self.fields['password'].widget.attrs.update({
 			'class': 'form-control',
 			"name":"password"})
+
 	def clean(self, *args, **keyargs):
 		username = self.cleaned_data.get("username")
 		password = self.cleaned_data.get("password")
@@ -45,7 +52,6 @@ SUBJECT_CODE_DICT = {
 	'23':'NEPALI'
 }
 
-
 class StudentForm(forms.ModelForm):
 	class Meta:
 		model = Student
@@ -69,6 +75,9 @@ class SchoolProfileForm(forms.ModelForm):
 	def __init__(self, *args, **kwargs):
 		super(SchoolProfileForm, self).__init__(*args, **kwargs)
 		
-		self.fields['name'].label = 'Name of H.M./T.I.C'      
+		self.fields['name'].label = 'Name of H.M. / T.I.C'      
 		self.fields['phone'].label = 'Mobile Number'
+
+		for field in self.fields:
+			self.fields[field].widget.attrs.update({'class': 'form-control'})
 	

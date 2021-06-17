@@ -1,11 +1,28 @@
 {% extends 'base.html' %}
 {% load static %}
+{% block style %}
+<style>
+	.form-profile {
+	    padding: 15px 35px 45px;
+	    margin: 0 auto;
+	    background-color: #fff;
+	    border: 1px solid rgba(0, 0, 0, 0.1);
+	}
+</style>
+{% endblock %}
 {% block content %}
-	<div style="margin-top: -300px; margin-bottom: -118px;">
-	<form method="post" action="." >
-		{% csrf_token %}
-		{{ form.as_p }}
-		<button type="submit">Save</button>
-	</form>
+<section class="mt-5 pt-5 bg-info" style="min-height: calc(100vh - 48px);">
+	<div class="container-fluid">
+		<div class="row align-items-center mt-5">
+			<div class="col-md-6 offset-md-3">
+				<form class="form-profile" method="post" action="." >
+					<h2 class="form-heading mb-4">Update Profile</h2>
+					{% csrf_token %}
+					{{ form.as_p }}
+					<button class="btn btn-primary btn-block" type="submit">Save</button>
+				</form>
+			</div>
+		</div>
 	</div>
+</section>	
 {% endblock %}

@@ -1,40 +1,23 @@
 from django.shortcuts import render , redirect
-from .models import Student , SchoolProfile
 from django.urls import reverse
 from django.http import HttpResponse
-from django.utils import timezone
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User, Permission
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-import random
-import os
 from django.conf import settings
-from PIL import Image
-from django.views.decorators.csrf import csrf_exempt
 from django.template.loader import get_template
-from io import BytesIO
-from django.views.generic import View
-from django.utils import timezone
-from django.template.loader import render_to_string
-from django.utils.text import slugify
-from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login
-from .forms import StudentForm , UsersLoginForm , SchoolProfileForm
-from django.contrib.auth import logout
-from django.http import HttpResponseRedirect
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.contrib import messages
-from django.contrib.auth import update_session_auth_hash
-from django.contrib.auth.forms import PasswordChangeForm
-from .decorators import has_update_permission, has_password_change_permission
-from .tokens import account_activation_token
 from django.contrib.sites.shortcuts import get_current_site
-from django.template.loader import render_to_string
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes, force_text
-from django.conf import settings
 from django.core.mail import send_mail
+from django.template.loader import render_to_string
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.contrib.auth import update_session_auth_hash
+from .forms import StudentForm , UsersLoginForm , SchoolProfileForm, PasswordResetForm
+from .decorators import has_update_permission, has_password_change_permission
+from .tokens import account_activation_token
+from .models import Student , SchoolProfile
 import csv
 
 def login_view(request):
@@ -53,9 +36,10 @@ def login_view(request):
 		"form" : form,
 		"title" : "Login",
 	})
+
 def logout_view(request):
 	logout(request)
-	return HttpResponseRedirect("/")
+	return redirect("/")
 
 @login_required
 def school_profile(request):
@@ -98,11 +82,13 @@ def activate(request, uidb64, token):
 @login_required
 @has_password_change_permission
 def reset_password(request):
-	form = PasswordChangeForm(request.user)
+	form = PasswordResetForm(request.user)
+	# for field in form.fields:
+	# 	form.fields[field].widget.attrs.update({'class': 'form-control'})
 	update_permission = Permission.objects.get(codename='can_update')
 	password_change_permission = Permission.objects.get(codename='can_change_password')
 	if request.method == 'POST':
-		form = PasswordChangeForm(request.user, request.POST)
+		form = PasswordResetForm(request.user, request.POST)
 		if form.is_valid():
 			password = form.save()
 			update_session_auth_hash(request, password)
@@ -113,7 +99,7 @@ def reset_password(request):
 	context = {
 		'form': form
 	}
-	return render(request, 'reset-password.html', context)
+	return render(request, 'accounts/reset-password.html', context)
 
 
 @login_required
@@ -125,7 +111,7 @@ def change_password(request):
 		return redirect('marks:school_profile')
 	current_site = get_current_site(request)
 	mail_subject = "Activate your account"
-	message = render_to_string('account_activation_email.html', {
+	message = render_to_string('accounts/account_activation_email.html', {
 		'user': request.user,
 		'domain': current_site.domain,
 		'uid': urlsafe_base64_encode(force_bytes(request.user.pk)),
@@ -135,7 +121,7 @@ def change_password(request):
 	context = {
 		'user': request.user
 	}
-	return render(request, 'change-password.html', context)
+	return render(request, 'accounts/change-password.html', context)
 
 def home(request):
 	return render(request, 'home.html')
@@ -204,4 +190,6 @@ def student(request, rollno):
 	}
 	return render(request, 'student.html', context)
 
-
+@login_required
+def instructions(request):
+	return render(request, 'instructions.html')

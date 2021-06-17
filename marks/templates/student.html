@@ -1,13 +1,20 @@
 {% extends 'base.html' %}
 {% load static %}
+{% block style %}
+<style>
+    .list-group-item{
+        padding: .15rem 1rem;
+    }
+</style>
+{% endblock %}
 {% load i18n %}
 {% block content %}
-<section class="student my-5">
+<section class="student bg-info mt-5 pt-5" style="min-height: calc(100vh - 48px);">
 	<div class="container">
-		<div class="row">
+		<div class="row mt-4">
 			<div class="col-lg-4">
 				<h5>List of Students</h5>
-				<ul class="student_list list-group" style="height: calc(100vh - 250px);overflow-y: scroll;">
+				<ul class="student_list list-group" style="height: calc(100vh - 200px);overflow-y: scroll;">
 					{% for s in students %}
 					<li class="list-group-item p-0{% if s.complete %} disabled{% endif %}">
 						<a class="list-group-item list-group-item-action border-0{% if s == student %} active{% endif %}" href="{{ s.get_absolute_url }}">{{ s.rollno }}</a>
@@ -32,18 +39,19 @@
 					<input type="hidden" name="school" value="{{ student.school.id }}" />
 					<input type="hidden" name="sub1" value="{{ student.sub1 }}" />
 					<input type="hidden" name="sub2" value="{{ student.sub2 }}" />
-					<input type="hidden" name="sub3" value="{{ student.sub3 }}" />
 					<input type="hidden" name="{{ stage_field }}" value="1" />
 					<div class="row">
 						{% for field in form %}
-						{% if field.name != 'school' and field.name != 'sub1' and field.name != 'sub2' and field.name != 'sub3' %}
+						{% if field.name != 'school' and field.name != 'sub1' and field.name != 'sub2' %}
 						<div class="{% if forloop.counter0 > 6 %}col-md-2{% else %}col-md-6{% endif %}">
 							<label for="{{ field.auto_id }}">{{ field.label }}</label>
 							{{ field }}
 						</div>
 						{% endif %}
 						{% endfor %}
-						<button class="btn btn-primary mt-3 mx-2{% if student.complete %} disabled{% endif %}" type="submit">{% trans "Preview" %}</button>
+						<div class="col-12">
+							<button class="btn btn-primary btn-block{% if student.complete %} disabled{% endif %}" type="submit">{% trans "Preview" %}</button>
+						</div>
 					</div>
 				</form>
 			</div>
