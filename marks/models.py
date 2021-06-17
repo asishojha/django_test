@@ -24,15 +24,15 @@ SUBJECT_CODE_DICT = {
 
 class Student(models.Model):
     school = models.ForeignKey(User,on_delete=models.CASCADE)
-    ctg = models.CharField(max_length=2)
+    ctg = models.CharField(max_length=20)
     rollno = models.CharField(max_length=11, verbose_name='Roll-Number')
     regno = models.CharField(max_length=11, verbose_name='Registration Number')
     name = models.CharField(max_length=40)
     fname = models.CharField(max_length=40, verbose_name='First Name')
     dob = models.CharField(max_length=30, verbose_name='Date of Birth')
     subj = models.CharField(max_length=40, verbose_name='Subject Combination')
-    sub1 = models.CharField(max_length=2)
-    sub2 = models.CharField(max_length=2)
+    sub1 = models.CharField(max_length=20)
+    sub2 = models.CharField(max_length=20)
     fl = models.CharField(max_length=3 , null=True, blank=True, validators=[validate_marks])
     sl = models.CharField(max_length=3, null=True, blank=True, validators=[validate_marks])
     math = models.CharField(max_length=3, null=True, blank=True, validators=[validate_marks], verbose_name='Mathematics')
