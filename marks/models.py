@@ -51,10 +51,10 @@ class Student(models.Model):
         })
 
     def get_fl_name(self):
-        return SUBJECT_CODE_DICT[self.sub1]
+        return SUBJECT_CODE_DICT[f'{int(self.sub1)}']
 
     def get_sl_name(self):
-        return SUBJECT_CODE_DICT[self.sub2]
+        return SUBJECT_CODE_DICT[f'{int(self.sub2)}']
         
     class Meta:
         permissions = [

@@ -21,7 +21,7 @@ environ.Env.read_env()
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = env('SECRET_KEY')
 
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['www.wbbsedata.com']
 
@@ -36,8 +36,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'marks.apps.MarksConfig',
-    'formtools',   
-    
+    'formtools', 
+    'storages',    
 ]
 
 MIDDLEWARE = [
@@ -47,8 +47,7 @@ MIDDLEWARE = [
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',  
 ]
 
 ROOT_URLCONF = 'wbdata.urls'
@@ -71,9 +70,9 @@ TEMPLATES = [
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtpout.secureserver.net'
-EMAIL_HOST_USER = 'info@wbbsedata.com'
-EMAIL_HOST_PASSWORD = 'Subhro@123'
-EMAIL_PORT = 80
+EMAIL_HOST_USER = env('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
+EMAIL_PORT = env('EMAIL_PORT')
 EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
 DEFAULT_FROM_EMAIL = 'info@wbbsedata.com'
@@ -126,7 +125,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Kolkata'
 
 USE_I18N = True
 
@@ -140,13 +139,22 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
-STATICFILES_DIRS = [BASE_DIR / 'static']
-STATIC_ROOT= BASE_DIR / 'staticfiles'
 MEDIA_ROOT = BASE_DIR / 'media'
 LOGIN_URL = '/login/'
 
 LOGIN_REDIRECT_URL = '/'
+
+# STATICFILES_STORAGE  = 'wbdata.storage.backend.AzureStaticStorage'
+
+# AZURE_ACCOUNT_NAME = env('AZURE_ACCOUNT_NAME')
+# AZURE_STORAGE_KEY = env('AZURE_STORAGE_KEY')
+# AZURE_STATIC_CONTAINER = env('AZURE_STATIC_CONTAINER')
+# AZURE_CUSTOM_DOMAIN = f'{AZURE_ACCOUNT_NAME}.azureedge.net'
+
+# STATIC_URL = f'https://{AZURE_CUSTOM_DOMAIN}/{AZURE_STATIC_CONTAINER}/'
+STATIC_ROOT= BASE_DIR / 'staticfiles'
+STATICFILES_DIRS = [BASE_DIR / 'static']
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
-
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
