@@ -20,7 +20,7 @@
 					</li>
 				</ul>
 				<h3 class="mt-4">Or Edit it again.</h3>
-				<a href="{% url 'marks:student' rollno=student.rollno %}" class="d-block btn btn-success">Edit</a>
+				<a href="{% url 'marks:student' rollno=student.rollno %}" class="d-block btn btn-success{% if student.complete %} disabled{% endif %}">Edit</a>
 			</div>
 			<div class="col-lg-8">
 				<form method="POST" action="">
