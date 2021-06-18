@@ -69,8 +69,8 @@ class StudentForm(forms.ModelForm):
 			self.fields[field].widget.attrs.update({'class': 'form-control mb-3', 'required': ''})
 			if self[field].value() is not None:
 				self.fields[field].widget.attrs.update({'disabled': ''})
-			self.fields['fl'].label = SUBJECT_CODE_DICT[self['sub1'].value()].title() #'math' => 'fl'
-			self.fields['sl'].label = SUBJECT_CODE_DICT[self['sub2'].value()].title() #'english' => second field
+			self.fields['fl'].label = SUBJECT_CODE_DICT[f'{int(self['sub1'].value())}'].title() #'math' => 'fl'
+			self.fields['sl'].label = SUBJECT_CODE_DICT[f'{int(self['sub2'].value())}'].title() #'english' => second field
 			if len(self[field].errors) > 0:
 				self.fields[field].widget.attrs.pop('disabled')
 		
