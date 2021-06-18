@@ -23,7 +23,7 @@ SECRET_KEY = env('SECRET_KEY')
 
 DEBUG = False
 
-ALLOWED_HOSTS = ['wbbsedata.com']
+ALLOWED_HOSTS = ['www.wbbsedata.com']
 
 
 # Application definition
