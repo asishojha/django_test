@@ -172,7 +172,7 @@ def student(request, rollno):
 			pass
 
 			try:
-				next_student = students.filter(complete=False).order_by('rollno')[0]
+				next_student = Student.objects.filter(school=request.user, complete=False).order_by('rollno')[0]
 				messages.success(request, f'Congratulations! Data for student {obj.rollno} have been updated.')
 				return redirect(next_student.get_absolute_url())
 			except IndexError:
