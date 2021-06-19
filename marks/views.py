@@ -83,8 +83,6 @@ def activate(request, uidb64, token):
 @has_password_change_permission
 def reset_password(request):
 	form = PasswordResetForm(request.user)
-	# for field in form.fields:
-	# 	form.fields[field].widget.attrs.update({'class': 'form-control'})
 	update_permission = Permission.objects.get(codename='can_update')
 	password_change_permission = Permission.objects.get(codename='can_change_password')
 	if request.method == 'POST':
@@ -161,7 +159,6 @@ def students(request):
 @login_required
 @has_update_permission
 def student(request, rollno):
-	last_elements_list = ['6', '5', '4', '3', '2', '1']
 	students = Student.objects.filter(school=request.user).order_by('rollno')
 	student = Student.objects.get(rollno=rollno, school=request.user)
 	form = StudentForm(instance=student)
@@ -175,7 +172,7 @@ def student(request, rollno):
 			pass
 
 			try:
-				next_student = students.filter(rollno__gt=rollno, complete=False)[0]
+				next_student = students.filter(complete=False)[0]
 				messages.success(request, f'Congratulations! Data for student {obj.rollno} have been updated.')
 				return redirect(next_student.get_absolute_url())
 			except IndexError:
@@ -185,8 +182,7 @@ def student(request, rollno):
 	context = {
 		'student': student,
 		'students': students,
-		'form': form,
-		'last_elements_list': 'last_elements_list'
+		'form': form
 	}
 	return render(request, 'student.html', context)
 
