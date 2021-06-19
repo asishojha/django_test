@@ -15,7 +15,7 @@ from django.template.loader import render_to_string
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.auth import update_session_auth_hash
 from .forms import StudentForm , UsersLoginForm , SchoolProfileForm, PasswordResetForm
-from .decorators import has_update_permission, has_password_change_permission
+from .decorators import has_update_permission, has_password_change_permission, has_schoolprofile, no_update_pemission
 from .tokens import account_activation_token
 from .models import Student , SchoolProfile
 import csv
@@ -27,26 +27,34 @@ def login_view(request):
 		password = form.cleaned_data.get("password")
 		user = authenticate(username = username, password = password)
 		login(request, user)
-		try:
-			profile = request.user.schoolprofile
+		if user.has_perm('marks.can_update'):
 			return redirect('marks:students')
-		except:
-			return redirect("marks:school_profile")
+		else:
+			try:
+				profile = request.user.schoolprofile
+				if not user.has_perm('marks.can_change_password'):
+					return redirect('marks:students')
+				else:
+					return redirect('marks:change_password')
+			except SchoolProfile.DoesNotExist:
+				return redirect("marks:school_profile")
 	return render(request, "accounts/form.html", {
 		"form" : form,
 		"title" : "Login",
 	})
 
+@login_required
 def logout_view(request):
 	logout(request)
 	return redirect("/")
 
 @login_required
+@no_update_pemission
 def school_profile(request):
 	try:
 		profile = request.user.schoolprofile
 		return redirect('marks:change_password')
-	except:
+	except SchoolProfile.DoesNotExist:
 		pass
 	user = request.user
 	form = SchoolProfileForm()
@@ -58,6 +66,8 @@ def school_profile(request):
 			profile.save()
 			user.email = profile.email
 			user.save()
+			permission = Permission.objects.get(codename='can_change_password')
+			user.user_permissions.add(permission)
 			return redirect('marks:change_password')
 	context = {
 		'form': form
@@ -65,22 +75,23 @@ def school_profile(request):
 	return render(request, 'school-profile.html', context)
 
 @login_required
+@no_update_pemission
 def activate(request, uidb64, token):
 	try:
 		uid = force_text(urlsafe_base64_decode(uidb64))
 		user = User.objects.get(pk=uid) 
-		print(user)
 	except:
 		user = None
 
 	if user is not None and account_activation_token.check_token(user, token):
+		# change_password_permission = Permission.objects.get(codename='can_change_password')
 		if request.user == user:
-			permission = Permission.objects.get(codename='can_change_password')
-			request.user.user_permissions.add(permission)
+			# user.user_permissions.remove(change_password_permission)
 			return redirect('marks:reset_password')
 	return HttpResponse('Activation Link Invalid')
 
 @login_required
+@no_update_pemission
 @has_password_change_permission
 def reset_password(request):
 	form = PasswordResetForm(request.user)
@@ -100,15 +111,10 @@ def reset_password(request):
 	}
 	return render(request, 'accounts/reset-password.html', context)
 
-
 @login_required
-@has_password_change_permission
+@no_update_pemission
+@has_schoolprofile
 def change_password(request):
-	try:
-		profile = request.user.schoolprofile
-		pass
-	except SchoolProfile.DoesNotExist:
-		return redirect('marks:school_profile')
 	current_site = get_current_site(request)
 	mail_subject = "Activate your account"
 	message = render_to_string('accounts/account_activation_email.html', {
