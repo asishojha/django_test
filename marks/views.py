@@ -21,6 +21,8 @@ from .models import Student , SchoolProfile
 import csv
 
 def login_view(request):
+	if request.user.is_authenticated:
+		return redirect('marks:home')
 	form = UsersLoginForm(request.POST or None)
 	if form.is_valid():
 		username = form.cleaned_data.get("username")
