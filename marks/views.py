@@ -156,35 +156,5 @@ def students(request):
 	}
 	return render(request, 'student_list.html', context)
 
-@login_required
-@has_update_permission
-def student(request, rollno):
-	students = Student.objects.filter(school=request.user).order_by('rollno')
-	student = Student.objects.get(rollno=rollno, school=request.user)
-	form = StudentForm(instance=student)
-
-	if request.method == 'POST':
-		form = StudentForm(request.POST, instance=student)
-		if form.is_valid():
-			obj = form.save(commit=False)
-			obj.complete = True
-			obj.save()
-			pass
-
-			try:
-				next_student = Student.objects.filter(school=request.user, complete=False).order_by('rollno')[0]
-				messages.success(request, f'Congratulations! Data for student {obj.rollno} have been updated.')
-				return redirect(next_student.get_absolute_url())
-			except IndexError:
-				messages.success(request, 'Congratulations! Data for all the students have been updated.')
-				return redirect('marks:students')
-
-	context = {
-		'student': student,
-		'students': students,
-		'form': form
-	}
-	return render(request, 'student.html', context)
-
 def instructions(request):
 	return render(request, 'instructions.html')
