@@ -1,6 +1,6 @@
 from django.conf.urls import url
 from django.urls import path
-from .views import home , logout_view , login_view, students , student, change_password, school_profile, activate, reset_password, instructions
+from .views import home , logout_view , login_view, students, change_password, school_profile, activate, reset_password, instructions
 from .preview import StudentFormPreview
 from .forms import StudentForm
 
