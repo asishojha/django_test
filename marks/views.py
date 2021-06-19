@@ -116,7 +116,7 @@ def reset_password(request):
 @has_schoolprofile
 def change_password(request):
 	if request.user.has_perm('marks.can_change_password'):
-		return redirect('marks:reset-password')
+		return redirect('marks:reset_password')
 
 	current_site = get_current_site(request)
 	mail_subject = "Activate your account"
