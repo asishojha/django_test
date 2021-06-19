@@ -63,6 +63,7 @@ def school_profile(request):
 		'form': form
 	}
 	return render(request, 'school-profile.html', context)
+
 @login_required
 def activate(request, uidb64, token):
 	try:
@@ -101,6 +102,7 @@ def reset_password(request):
 
 
 @login_required
+@has_password_change_permission
 def change_password(request):
 	try:
 		profile = request.user.schoolprofile
