@@ -20,7 +20,7 @@ class StudentFormPreview(FormPreview):
 	def parse_params(self, request, *args, **kwargs):
 		self.student = Student.objects.get(school=request.user, rollno=kwargs['rollno'])
 		try:
-			self.next_student = Student.objects.filter(school=request.user, complete=False).order_by('rollno')[1]
+			self.next_student = Student.objects.filter(school=request.user, complete=False).exclude(rollno=kwargs['rollno']).order_by('rollno')[0]
 		except IndexError:
 			self.next_student = None
 
