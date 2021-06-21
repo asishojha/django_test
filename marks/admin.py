@@ -12,7 +12,7 @@ from django.conf import settings
 from marks.models import Student, SchoolProfile
 
 class StudentAdmin(admin.ModelAdmin):
-    list_display = ['school', 'ctg','rollno','regno','name','fname','dob','sub1','sub2','sub2']
+    list_display = ['school', 'ctg','rollno','regno','name','fname','dob','sub1','sub2']
 
 class SchoolProfileAdmin(admin.ModelAdmin):
     
