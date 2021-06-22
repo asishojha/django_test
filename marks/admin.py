@@ -15,7 +15,7 @@ class StudentAdmin(admin.ModelAdmin):
     list_display = ['school', 'ctg','rollno','regno','name','fname','dob','sub1','sub2']
 
 class SchoolProfileAdmin(admin.ModelAdmin):
-    search_fields = ['school']
+    search_fields = ['school__username']
     @method_decorator(staff_member_required)
     def reset_password(self, request, pk):
         profile = SchoolProfile.objects.get(pk=pk)
