@@ -28,9 +28,9 @@ class SchoolProfileAdmin(admin.ModelAdmin):
         user.user_permissions.remove(update_permission)
         user.user_permissions.add(password_change_permission)
 
-        mail_subject = "Reset your Account's Password"
-        message = f"Hi {user.username}, as per your request, your password has been reset.\nPlease login to the site again and reset your password once again.\nTo Login into the website, please use following credentials:\nUsername: {user.username}\nPassword: password"
-        send_mail(mail_subject, message, settings.EMAIL_HOST_USER, [user.email])
+        # mail_subject = "Reset your Account's Password"
+        # message = f"Hi {user.username}, as per your request, your password has been reset.\nPlease login to the site again and reset your password once again.\nTo Login into the website, please use following credentials:\nUsername: {user.username}\nPassword: password"
+        # send_mail(mail_subject, message, settings.EMAIL_HOST_USER, [user.email])
 
         messages.success(request, f"Password of the school with index {user.username} has been reset to 'password'.")
         return redirect(reverse("admin:%s_%s_change" %(self.model._meta.app_label, self.model._meta.model_name), args=(pk,)))

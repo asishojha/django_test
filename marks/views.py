@@ -37,7 +37,7 @@ def login_view(request):
 				if not user.has_perm('marks.can_change_password'):
 					return redirect('marks:students')
 				else:
-					return redirect('marks:change_password')
+					return redirect('marks:reset_password')
 			except SchoolProfile.DoesNotExist:
 				return redirect("marks:school_profile")
 	return render(request, "accounts/form.html", {
@@ -53,12 +53,15 @@ def logout_view(request):
 @login_required
 @no_update_pemission
 def school_profile(request):
+	user = request.user
 	try:
 		profile = request.user.schoolprofile
-		return redirect('marks:change_password')
+		if not user.has_perm('marks.can_change_password'):
+			return redirect('marks:students')
+		else:
+			return redirect('marks:reset_password')
 	except SchoolProfile.DoesNotExist:
 		pass
-	user = request.user
 	form = SchoolProfileForm()
 	if request.method == 'POST':
 		form = SchoolProfileForm(request.POST)
@@ -70,27 +73,27 @@ def school_profile(request):
 			user.save()
 			permission = Permission.objects.get(codename='can_change_password')
 			user.user_permissions.add(permission)
-			return redirect('marks:change_password')
+			return redirect('marks:reset_password')
 	context = {
 		'form': form
 	}
 	return render(request, 'school-profile.html', context)
 
-@login_required
-@no_update_pemission
-def activate(request, uidb64, token):
-	try:
-		uid = force_text(urlsafe_base64_decode(uidb64))
-		user = User.objects.get(pk=uid) 
-	except:
-		user = None
+# @login_required
+# @no_update_pemission
+# def activate(request, uidb64, token):
+# 	try:
+# 		uid = force_text(urlsafe_base64_decode(uidb64))
+# 		user = User.objects.get(pk=uid) 
+# 	except:
+# 		user = None
 
-	if user is not None and account_activation_token.check_token(user, token):
-		# change_password_permission = Permission.objects.get(codename='can_change_password')
-		if request.user == user:
-			# user.user_permissions.remove(change_password_permission)
-			return redirect('marks:reset_password')
-	return HttpResponse('Activation Link Invalid')
+# 	if user is not None and account_activation_token.check_token(user, token):
+# 		# change_password_permission = Permission.objects.get(codename='can_change_password')
+# 		if request.user == user:
+# 			# user.user_permissions.remove(change_password_permission)
+# 			return redirect('marks:reset_password')
+# 	return HttpResponse('Activation Link Invalid')
 
 @login_required
 @no_update_pemission
@@ -113,23 +116,23 @@ def reset_password(request):
 	}
 	return render(request, 'accounts/reset-password.html', context)
 
-@login_required
-@no_update_pemission
-@has_schoolprofile
-def change_password(request):
-	current_site = get_current_site(request)
-	mail_subject = "Activate your account"
-	message = render_to_string('accounts/account_activation_email.html', {
-		'user': request.user,
-		'domain': current_site.domain,
-		'uid': urlsafe_base64_encode(force_bytes(request.user.pk)),
-		'token': account_activation_token.make_token(request.user),
-	})
-	send_mail(mail_subject, message, settings.EMAIL_HOST_USER, [request.user.email])
-	context = {
-		'user': request.user
-	}
-	return render(request, 'accounts/change-password.html', context)
+# @login_required
+# @no_update_pemission
+# @has_schoolprofile
+# def change_password(request):
+# 	current_site = get_current_site(request)
+# 	mail_subject = "Activate your account"
+# 	message = render_to_string('accounts/account_activation_email.html', {
+# 		'user': request.user,
+# 		'domain': current_site.domain,
+# 		'uid': urlsafe_base64_encode(force_bytes(request.user.pk)),
+# 		'token': account_activation_token.make_token(request.user),
+# 	})
+# 	send_mail(mail_subject, message, settings.EMAIL_HOST_USER, [request.user.email])
+# 	context = {
+# 		'user': request.user
+# 	}
+# 	return render(request, 'accounts/change-password.html', context)
 
 def home(request):
 	return render(request, 'home.html')
