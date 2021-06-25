@@ -171,3 +171,6 @@ def students(request):
 
 def instructions(request):
 	return render(request, 'instructions.html')
+
+def notifications(request):
+	return render(request, 'notifications.html')
