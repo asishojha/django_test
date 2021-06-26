@@ -12,21 +12,11 @@
         color: red;
         text-shadow: 0 0 black;
     }
-    nav{
-        margin-top: 49px;
-        transition: 0.15s ease-in-out all;
-    }
-    nav.scrolled{
-        margin-top: 0;
-    }
     </style>
     {% block style %}{% endblock %}
 </head>
 
 <body>
-    <div class="top-bar py-2 bg-danger">
-        <h3 class="text-center text-white my-0">Please Visit the Notifications Section</h3>
-    </div>
     <nav class="navbar navbar-expand-md navbar-light bg-dark fixed-top">
         <a href="{% url 'marks:home' %}" class="navbar-brand">
             <img src="{% static 'logo.png' %}" height="85" alt="CoolBrand">
@@ -59,11 +49,6 @@
     {% block content %}{% endblock %}
     <script src="{% static 'js/jquery.min.js' %}"></script>
     <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
-    <script>
-        $(window).scroll(function () {
-            $('nav').toggleClass('scrolled', $(this).scrollTop() > 20);
-        });
-    </script>
     {% block script %}{% endblock %}
 </body>
 
